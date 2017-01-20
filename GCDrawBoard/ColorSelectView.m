@@ -87,9 +87,9 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if (self.didSelectedBlock){
+    if (self.didSelectedBlock){
         _didSelectedBlock(self.colors[indexPath.item]);
-//    }
+    }
 }
 
 @end
