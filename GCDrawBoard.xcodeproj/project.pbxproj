@@ -15,6 +15,9 @@
 		18E2B3EE1E31BC4B005BCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E2B3EC1E31BC4B005BCFBE /* LaunchScreen.storyboard */; };
 		18E2B3F91E31BC4B005BCFBE /* GCDrawBoardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B3F81E31BC4B005BCFBE /* GCDrawBoardTests.m */; };
 		18E2B4041E31BC4B005BCFBE /* GCDrawBoardUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4031E31BC4B005BCFBE /* GCDrawBoardUITests.m */; };
+		18E2B4141E31BE60005BCFBE /* GCDrawBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4131E31BE60005BCFBE /* GCDrawBoard.m */; };
+		18E2B4171E320639005BCFBE /* GCDrawPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4161E320639005BCFBE /* GCDrawPoint.m */; };
+		18E2B41A1E320B76005BCFBE /* ColorSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4191E320B76005BCFBE /* ColorSelectView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,12 @@
 		18E2B3FF1E31BC4B005BCFBE /* GCDrawBoardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GCDrawBoardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E2B4031E31BC4B005BCFBE /* GCDrawBoardUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDrawBoardUITests.m; sourceTree = "<group>"; };
 		18E2B4051E31BC4B005BCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18E2B4121E31BE60005BCFBE /* GCDrawBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDrawBoard.h; sourceTree = "<group>"; };
+		18E2B4131E31BE60005BCFBE /* GCDrawBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDrawBoard.m; sourceTree = "<group>"; };
+		18E2B4151E320639005BCFBE /* GCDrawPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDrawPoint.h; sourceTree = "<group>"; };
+		18E2B4161E320639005BCFBE /* GCDrawPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDrawPoint.m; sourceTree = "<group>"; };
+		18E2B4181E320B76005BCFBE /* ColorSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSelectView.h; sourceTree = "<group>"; };
+		18E2B4191E320B76005BCFBE /* ColorSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSelectView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +114,7 @@
 				18E2B3E21E31BC4B005BCFBE /* AppDelegate.m */,
 				18E2B3E41E31BC4B005BCFBE /* ViewController.h */,
 				18E2B3E51E31BC4B005BCFBE /* ViewController.m */,
+				18E2B4111E31BE1C005BCFBE /* GCDrawBoard */,
 				18E2B3E71E31BC4B005BCFBE /* Main.storyboard */,
 				18E2B3EA1E31BC4B005BCFBE /* Assets.xcassets */,
 				18E2B3EC1E31BC4B005BCFBE /* LaunchScreen.storyboard */,
@@ -138,6 +148,19 @@
 				18E2B4051E31BC4B005BCFBE /* Info.plist */,
 			);
 			path = GCDrawBoardUITests;
+			sourceTree = "<group>";
+		};
+		18E2B4111E31BE1C005BCFBE /* GCDrawBoard */ = {
+			isa = PBXGroup;
+			children = (
+				18E2B4121E31BE60005BCFBE /* GCDrawBoard.h */,
+				18E2B4131E31BE60005BCFBE /* GCDrawBoard.m */,
+				18E2B4151E320639005BCFBE /* GCDrawPoint.h */,
+				18E2B4161E320639005BCFBE /* GCDrawPoint.m */,
+				18E2B4181E320B76005BCFBE /* ColorSelectView.h */,
+				18E2B4191E320B76005BCFBE /* ColorSelectView.m */,
+			);
+			name = GCDrawBoard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,9 +299,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E2B4141E31BE60005BCFBE /* GCDrawBoard.m in Sources */,
 				18E2B3E61E31BC4B005BCFBE /* ViewController.m in Sources */,
+				18E2B41A1E320B76005BCFBE /* ColorSelectView.m in Sources */,
 				18E2B3E31E31BC4B005BCFBE /* AppDelegate.m in Sources */,
 				18E2B3E01E31BC4B005BCFBE /* main.m in Sources */,
+				18E2B4171E320639005BCFBE /* GCDrawPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
