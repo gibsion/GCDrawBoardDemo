@@ -44,6 +44,20 @@
     self.tmpPoints = [NSMutableArray new];
 }
 
+-(void)setIsErase:(BOOL)isErase {
+    _isErase = isErase;
+    if (_isErase) {
+        //保存上次绘制状态
+        _lastColor = self.lineColor;
+        _lastLineWidth = self.lineWidth;
+        //设置橡皮擦属性
+        self.lineColor = [UIColor clearColor];
+    }else{
+        self.shapeType = GCDrawShapeCurve;
+        self.lineColor = _lastColor;
+        self.lineWidth = _lastLineWidth;
+    }
+}
 
 #pragma mark --actions
 

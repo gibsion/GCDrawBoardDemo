@@ -12,6 +12,8 @@ typedef void(^DidSelectedColorBlock)(UIColor *color);
 
 @interface ColorSelectView : UIView
 
+@property (strong, nonatomic) UIColor *currentColor;
+
 @property (strong, nonatomic) DidSelectedColorBlock didSelectedBlock;
 
 @end

@@ -24,6 +24,7 @@
 
 -(instancetype) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
+    self.userInteractionEnabled = YES;
     [self initData];
     [self initSubViews];
     return  self;
@@ -46,9 +47,11 @@
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame: self.bounds collectionViewLayout: flowLayout];
+        _collectionView.backgroundColor = [UIColor lightGrayColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.userInteractionEnabled = YES;
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier: ColorCellIdentifier];
     }
     
@@ -57,16 +60,33 @@
 
 -(void)initData {
     self.colors = [NSMutableArray new];
-    NSInteger colorValues[] = {0xed4040,
-                               0xf5973c,
-                               0xefe82e,
-                               0x7ce331,
-                               0x48dcde,
-                               0x2877e3,
-                               0x9b33e4};
+    NSInteger colorValues[] = {0xFF0000,
+                               0xFF34B3,
+                               0xFF00FF,
+                               0xFF83FA,
+                               0xFFBBFF,
+                               0xFFFF00,
+                               0xFFF68F,
+                               0x3A5FCD,
+                               0x3A5FCD,
+                               0x1E90FF,
+                               0x00F5FF,
+                               0x00CD00,
+                               0x00EE00,
+                               0x00FF00,
+                               0x006400,
+                               0x000000,
+                               0x7A8B8B,
+                               0x8A2BE2,
+                               0x912CEE,
+                               0x9B30FF,
+                               0x9F79EE
+                                };
     for (NSInteger i = 0; i < sizeof(colorValues)/sizeof(NSInteger); i++) {
         [self.colors addObject: HexRGBAlpha(colorValues[i], 1.0)];
     }
+    
+    self.currentColor = self.colors[0];
 }
 
 #pragma mark -- UICollectionViewDelegate, UICollectionViewDataSource
@@ -82,12 +102,14 @@
 
 -(__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ColorCellIdentifier forIndexPath: indexPath];
-    cell.backgroundColor = self.colors[indexPath.item];
+    cell.contentView.backgroundColor = self.colors[indexPath.item];
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"select color !!!");
     if (self.didSelectedBlock){
+        _currentColor = self.colors[indexPath.item];
         _didSelectedBlock(self.colors[indexPath.item]);
     }
 }
