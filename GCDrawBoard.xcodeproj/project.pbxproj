@@ -31,6 +31,10 @@
 		18E2B4171E320639005BCFBE /* GCDrawPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4161E320639005BCFBE /* GCDrawPoint.m */; };
 		18E2B41A1E320B76005BCFBE /* GCColorSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2B4191E320B76005BCFBE /* GCColorSelectView.m */; };
 		18E958F31E4435F0009B440D /* GCPanColorToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E958F21E4435F0009B440D /* GCPanColorToolBar.m */; };
+		18E958F61E446108009B440D /* GCTextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E958F51E446108009B440D /* GCTextToolBar.m */; };
+		18E958F91E44739D009B440D /* icon_text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E958F71E44739D009B440D /* icon_text@2x.png */; };
+		18E958FA1E44739D009B440D /* icon_text@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E958F81E44739D009B440D /* icon_text@3x.png */; };
+		18E9FAC01E447E5300CD4D9A /* YBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +92,12 @@
 		18E2B4191E320B76005BCFBE /* GCColorSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCColorSelectView.m; sourceTree = "<group>"; };
 		18E958F11E4435F0009B440D /* GCPanColorToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPanColorToolBar.h; sourceTree = "<group>"; };
 		18E958F21E4435F0009B440D /* GCPanColorToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPanColorToolBar.m; sourceTree = "<group>"; };
+		18E958F41E446108009B440D /* GCTextToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTextToolBar.h; sourceTree = "<group>"; };
+		18E958F51E446108009B440D /* GCTextToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTextToolBar.m; sourceTree = "<group>"; };
+		18E958F71E44739D009B440D /* icon_text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_text@2x.png"; sourceTree = "<group>"; };
+		18E958F81E44739D009B440D /* icon_text@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_text@3x.png"; sourceTree = "<group>"; };
+		18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBPopupMenu.h; sourceTree = "<group>"; };
+		18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +140,8 @@
 				187557311E3352ED0009008F /* shanchu@3x.png */,
 				187557381E335BD10009008F /* xiangpica@2x.png */,
 				187557391E335BD10009008F /* xiangpica@3x.png */,
+				18E958F71E44739D009B440D /* icon_text@2x.png */,
+				18E958F81E44739D009B440D /* icon_text@3x.png */,
 			);
 			path = Icon;
 			sourceTree = "<group>";
@@ -200,6 +212,8 @@
 		18E2B4111E31BE1C005BCFBE /* GCDrawBoard */ = {
 			isa = PBXGroup;
 			children = (
+				18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */,
+				18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */,
 				18E2B4121E31BE60005BCFBE /* GCDrawBoard.h */,
 				18E2B4131E31BE60005BCFBE /* GCDrawBoard.m */,
 				18E2B4151E320639005BCFBE /* GCDrawPoint.h */,
@@ -208,6 +222,8 @@
 				18E2B4191E320B76005BCFBE /* GCColorSelectView.m */,
 				18E958F11E4435F0009B440D /* GCPanColorToolBar.h */,
 				18E958F21E4435F0009B440D /* GCPanColorToolBar.m */,
+				18E958F41E446108009B440D /* GCTextToolBar.h */,
+				18E958F51E446108009B440D /* GCTextToolBar.m */,
 				1875571F1E32FD030009008F /* GCDrawBoardToolBar.h */,
 				187557201E32FD030009008F /* GCDrawBoardToolBar.m */,
 			);
@@ -330,9 +346,11 @@
 				1875572D1E3352AE0009008F /* chexiao@3x.png in Resources */,
 				18E2B3EE1E31BC4B005BCFBE /* LaunchScreen.storyboard in Resources */,
 				18E2B3EB1E31BC4B005BCFBE /* Assets.xcassets in Resources */,
+				18E958F91E44739D009B440D /* icon_text@2x.png in Resources */,
 				187557361E335BAC0009008F /* bi@2x.png in Resources */,
 				1875573B1E335BD10009008F /* xiangpica@3x.png in Resources */,
 				1875572E1E3352AE0009008F /* qianjin@2x.png in Resources */,
+				18E958FA1E44739D009B440D /* icon_text@3x.png in Resources */,
 				187557321E3352ED0009008F /* shanchu@2x.png in Resources */,
 				187557261E3311850009008F /* tuya@3x.png in Resources */,
 				1875572F1E3352AE0009008F /* qianjin@3x.png in Resources */,
@@ -365,8 +383,10 @@
 				18E958F31E4435F0009B440D /* GCPanColorToolBar.m in Sources */,
 				18E2B3E61E31BC4B005BCFBE /* ViewController.m in Sources */,
 				18E2B41A1E320B76005BCFBE /* GCColorSelectView.m in Sources */,
+				18E9FAC01E447E5300CD4D9A /* YBPopupMenu.m in Sources */,
 				18E2B3E31E31BC4B005BCFBE /* AppDelegate.m in Sources */,
 				18E2B3E01E31BC4B005BCFBE /* main.m in Sources */,
+				18E958F61E446108009B440D /* GCTextToolBar.m in Sources */,
 				187557211E32FD030009008F /* GCDrawBoardToolBar.m in Sources */,
 				18E2B4171E320639005BCFBE /* GCDrawPoint.m in Sources */,
 			);

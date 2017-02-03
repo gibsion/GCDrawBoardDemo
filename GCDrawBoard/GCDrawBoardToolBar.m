@@ -8,6 +8,7 @@
 
 #import "GCDrawBoardToolBar.h"
 #import "GCPanColorToolBar.h"
+#import "GCTextToolBar.h"
 
 #define GCToolViewCellIdentifer         @"GCToolViewCellIdentifer"
 
@@ -19,6 +20,8 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 
 @property (strong, nonatomic) GCPanColorToolBar *panColorBarView;
+
+@property (strong, nonatomic) GCTextToolBar *textToolBarView;
 
 //data
 @property (strong, nonatomic) NSMutableArray *imgStringArray;
@@ -73,6 +76,7 @@
         _panColorBarView = [[GCPanColorToolBar alloc] initWithFrame: CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame))];
         
         self.drawBoard.enableDraw = YES;
+        self.drawBoard.isErase = NO;
         self.drawBoard.lineColor = _panColorBarView.panColor;
         self.drawBoard.lineWidth = _panColorBarView.panWidth;
         
@@ -87,9 +91,18 @@
     return _panColorBarView;
 }
 
+-(GCTextToolBar *)textToolBarView {
+    if (!_textToolBarView) {
+        _textToolBarView = [[GCTextToolBar alloc] initWithFrame: CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame))];
+    }
+    
+    return _textToolBarView;
+}
+
 -(void)initData {
     self.imgStringArray = [NSMutableArray new];
     [self.imgStringArray addObject: @"bi"];
+    [self.imgStringArray addObject: @"icon_text"];
     [self.imgStringArray addObject: @"chexiao"];
     [self.imgStringArray addObject: @"qianjin"];
     [self.imgStringArray addObject: @"shanchu"];
@@ -97,6 +110,7 @@
 }
 
 -(void)showColorSelectView {
+    [self removeTextToolBar];
     __weak typeof(self) weakSelf = self;
     
     if (!_panColorBarView) {
@@ -117,6 +131,28 @@
             [weakSelf.panColorBarView removeFromSuperview];
             weakSelf.panColorBarView = nil;
         }];
+    }
+}
+
+-(void)removeColorSelectView {
+    if (_panColorBarView) {
+        [_panColorBarView removeFromSuperview];
+        _panColorBarView = nil;
+    }
+}
+
+-(void)showTextToolBar {
+    self.drawBoard.enableDraw = NO;
+    [self removeColorSelectView];
+    
+    [self addSubview: self.textToolBarView];
+    
+}
+
+-(void)removeTextToolBar {
+    if (_textToolBarView) {
+        [_textToolBarView removeFromSuperview];
+        _textToolBarView = nil;
     }
 }
 
@@ -172,23 +208,29 @@
             
         case 1:
         {
-            [self revoke];
+            [self showTextToolBar];
         }
             break;
             
         case 2:
         {
-            [self resume];
+            [self revoke];
         }
             break;
             
         case 3:
         {
-            [self clear];
+            [self resume];
         }
             break;
             
         case 4:
+        {
+            [self clear];
+        }
+            break;
+            
+        case 5:
         {
             [self erase];
         }
