@@ -35,6 +35,7 @@
 		18E958F91E44739D009B440D /* icon_text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E958F71E44739D009B440D /* icon_text@2x.png */; };
 		18E958FA1E44739D009B440D /* icon_text@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E958F81E44739D009B440D /* icon_text@3x.png */; };
 		18E9FAC01E447E5300CD4D9A /* YBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */; };
+		D5D7BEBD1E44C3DF00696CE6 /* WawaSC.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D7BEBC1E44C3DE00696CE6 /* WawaSC.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		18E958F81E44739D009B440D /* icon_text@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_text@3x.png"; sourceTree = "<group>"; };
 		18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBPopupMenu.h; sourceTree = "<group>"; };
 		18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenu.m; sourceTree = "<group>"; };
+		D5D7BEBC1E44C3DE00696CE6 /* WawaSC.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = WawaSC.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 		18E2B4111E31BE1C005BCFBE /* GCDrawBoard */ = {
 			isa = PBXGroup;
 			children = (
+				D5D7BEBC1E44C3DE00696CE6 /* WawaSC.otf */,
 				18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */,
 				18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */,
 				18E2B4121E31BE60005BCFBE /* GCDrawBoard.h */,
@@ -340,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				187557331E3352ED0009008F /* shanchu@3x.png in Resources */,
+				D5D7BEBD1E44C3DF00696CE6 /* WawaSC.otf in Resources */,
 				1875572C1E3352AE0009008F /* chexiao@2x.png in Resources */,
 				1875573A1E335BD10009008F /* xiangpica@2x.png in Resources */,
 				187557371E335BAC0009008F /* bi@3x.png in Resources */,
