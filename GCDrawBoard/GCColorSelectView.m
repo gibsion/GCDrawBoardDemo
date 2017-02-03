@@ -6,21 +6,21 @@
 //  Copyright © 2017年 Gibson. All rights reserved.
 //
 
-#import "ColorSelectView.h"
+#import "GCColorSelectView.h"
 
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define HexRGBAlpha(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:(a)]
 
 #define ColorCellIdentifier      @"ColorCellIdentifier"
 
-@interface ColorSelectView () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface GCColorSelectView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray *colors;
 
 @end
 
-@implementation ColorSelectView
+@implementation GCColorSelectView
 
 -(instancetype) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

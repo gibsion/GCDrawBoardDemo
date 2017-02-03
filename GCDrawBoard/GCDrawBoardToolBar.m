@@ -7,7 +7,7 @@
 //
 
 #import "GCDrawBoardToolBar.h"
-#import "ColorSelectView.h"
+#import "GCPanColorToolBar.h"
 
 #define GCToolViewCellIdentifer         @"GCToolViewCellIdentifer"
 
@@ -18,15 +18,7 @@
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 
-@property (strong, nonatomic) ColorSelectView *colorSelectView;
-
-@property (strong, nonatomic) UIView *panColorView;
-
-@property (strong, nonatomic) UIView *currentPanColorView;
-
-@property (strong, nonatomic) UISlider *slider;
-
-@property (strong, nonatomic) UILabel *panSizeLabel;
+@property (strong, nonatomic) GCPanColorToolBar *panColorBarView;
 
 //data
 @property (strong, nonatomic) NSMutableArray *imgStringArray;
@@ -34,11 +26,6 @@
 @end
 
 @implementation GCDrawBoardToolBar
-
--(void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
-//    [self.collectionView setBackgroundColor: [UIColor lightGrayColor]];
-}
 
 -(instancetype)initWithDrawBoardView:(GCDrawBoard *)drawBoard Frame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -53,7 +40,7 @@
 }
 
 -(void)initSubViews {
-    [self addSubview: self.panColorView];
+    [self addSubview: self.panColorBarView];
     [self addSubview: self.collectionView];
 }
 
@@ -81,61 +68,24 @@
     return _collectionView;
 }
 
--(UIView *)panColorView {
-    if (!_panColorView) {
-        _panColorView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame))];
+-(GCPanColorToolBar *)panColorBarView {
+    if (!_panColorBarView) {
+        _panColorBarView = [[GCPanColorToolBar alloc] initWithFrame: CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame))];
         
-        [_panColorView addSubview: self.currentPanColorView];
-        [_panColorView addSubview: self.slider];
-        [_panColorView addSubview: self.panSizeLabel];
-        [_panColorView addSubview: self.colorSelectView];
+        self.drawBoard.enableDraw = YES;
+        self.drawBoard.lineColor = _panColorBarView.panColor;
+        self.drawBoard.lineWidth = _panColorBarView.panWidth;
+        
+         __weak typeof(self) weakSelf = self;
+        _panColorBarView.didChangePanBlock = ^{
+            weakSelf.drawBoard.isErase = NO;
+            weakSelf.drawBoard.lineColor = weakSelf.panColorBarView.panColor;
+            weakSelf.drawBoard.lineWidth = weakSelf.panColorBarView.panWidth;
+        };
     }
     
-    return _panColorView;
+    return _panColorBarView;
 }
-
--(UIView *)currentPanColorView {
-    if (!_currentPanColorView) {
-        _currentPanColorView = [[UIView alloc] initWithFrame: CGRectMake(15, 1, 30, 30)];
-        _currentPanColorView.backgroundColor = self.colorSelectView.currentColor;
-    }
-    
-    return _currentPanColorView;
-}
-
--(ColorSelectView *)colorSelectView {
-    if (!_colorSelectView) {
-        _colorSelectView = [[ColorSelectView alloc] initWithFrame: CGRectMake(self.panColorView.bounds.size.width/2.0 + 15, 0, self.panColorView.bounds.size.width / 2.0 - 15*2, 30)];
-    }
-    
-    return _colorSelectView;
-}
-
--(UISlider *)slider {
-    if (!_slider) {
-        _slider = [[UISlider alloc] initWithFrame: CGRectMake(CGRectGetMaxX(self.currentPanColorView.frame) + 10, self.panColorView.bounds.size.height/2.0 - 7, self.panColorView.bounds.size.width/2.0 - 15 * 2 - 20 - CGRectGetWidth(self.currentPanColorView.frame), 12)];
-        _slider.thumbTintColor = [UIColor orangeColor];
-        _slider.value = 5;
-        _slider.minimumValue = 1;
-        _slider.maximumValue = 60;
-        [_slider addTarget: self action: @selector(changePan:) forControlEvents: UIControlEventValueChanged];
-    }
-    
-    return _slider;
-}
-
--(UILabel *)panSizeLabel {
-    if (!_panSizeLabel) {
-        _panSizeLabel = [[UILabel alloc] initWithFrame: CGRectMake(CGRectGetMaxX(self.slider.frame) + 10, CGRectGetMidY(self.slider.frame) - 7, 40, 14)];
-        _panSizeLabel.textColor = [UIColor whiteColor];
-        _panSizeLabel.textAlignment = NSTextAlignmentLeft;
-        _panSizeLabel.font = [UIFont systemFontOfSize: 14];
-        _panSizeLabel.text = [NSString stringWithFormat: @"%zd", (NSInteger)(self.slider.value)];
-    }
-    
-    return _panSizeLabel;
-}
-
 
 -(void)initData {
     self.imgStringArray = [NSMutableArray new];
@@ -146,40 +96,26 @@
     [self.imgStringArray addObject: @"xiangpica"];
 }
 
--(void)changePan:(UISlider *)slider {
-//    NSLog(@"slider.value = %g", slider.value);
-    self.drawBoard.lineWidth = slider.value;
-    _panSizeLabel.text = [NSString stringWithFormat: @"%zd", (NSInteger)(slider.value)];
-}
-
 -(void)showColorSelectView {
     __weak typeof(self) weakSelf = self;
     
-    if (!_panColorView) {
-        [self addSubview: self.panColorView];
+    if (!_panColorBarView) {
+        [self addSubview: self.panColorBarView];
         
         self.drawBoard.enableDraw = YES;
-        self.drawBoard.lineColor = self.colorSelectView.currentColor;
-        self.drawBoard.lineWidth = self.slider.value;
-        self.colorSelectView.backgroundColor = [UIColor whiteColor];
-        self.colorSelectView.didSelectedBlock = ^(UIColor *color) {
-            weakSelf.drawBoard.isErase = NO;
-            weakSelf.currentPanColorView.backgroundColor = color;
-            weakSelf.drawBoard.lineColor = color;
-            weakSelf.drawBoard.lineWidth = weakSelf.slider.value;
-        };
-        
+        self.drawBoard.lineColor = self.panColorBarView.panColor;
+        self.drawBoard.lineWidth = self.panColorBarView.panWidth;
         [UIView animateWithDuration: 0.3 animations:^{
-            weakSelf.panColorView.frame = CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame));
+            weakSelf.panColorBarView.frame = CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame));
         }];
     }
     else {
         self.drawBoard.enableDraw = NO;
         [UIView animateWithDuration: 0.3 animations:^{
-            weakSelf.panColorView.frame = CGRectMake(0, self.bounds.size.height/4.0, self.bounds.size.width, 0);
+            weakSelf.panColorBarView.frame = CGRectMake(0, self.bounds.size.height/4.0, self.bounds.size.width, 0);
         } completion:^(BOOL finished) {
-            [weakSelf.panColorView removeFromSuperview];
-            weakSelf.panColorView = nil;
+            [weakSelf.panColorBarView removeFromSuperview];
+            weakSelf.panColorBarView = nil;
         }];
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ColorSelectView.h
+//  GCColorSelectView.h
 //  GCDrawBoard
 //
 //  Created by APPLE on 2017/1/20.
@@ -10,7 +10,7 @@
 
 typedef void(^DidSelectedColorBlock)(UIColor *color);
 
-@interface ColorSelectView : UIView
+@interface GCColorSelectView : UIView
 
 @property (strong, nonatomic) UIColor *currentColor;
 
