@@ -20,6 +20,10 @@
 
 @property (strong, nonatomic) ColorSelectView *colorSelectView;
 
+@property (strong, nonatomic) UIView *panColorView;
+
+@property (strong, nonatomic) UIView *currentPanColorView;
+
 @property (strong, nonatomic) UISlider *slider;
 
 @property (strong, nonatomic) UILabel *panSizeLabel;
@@ -49,6 +53,7 @@
 }
 
 -(void)initSubViews {
+    [self addSubview: self.panColorView];
     [self addSubview: self.collectionView];
 }
 
@@ -76,9 +81,31 @@
     return _collectionView;
 }
 
+-(UIView *)panColorView {
+    if (!_panColorView) {
+        _panColorView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame))];
+        
+        [_panColorView addSubview: self.currentPanColorView];
+        [_panColorView addSubview: self.slider];
+        [_panColorView addSubview: self.panSizeLabel];
+        [_panColorView addSubview: self.colorSelectView];
+    }
+    
+    return _panColorView;
+}
+
+-(UIView *)currentPanColorView {
+    if (!_currentPanColorView) {
+        _currentPanColorView = [[UIView alloc] initWithFrame: CGRectMake(15, 1, 30, 30)];
+        _currentPanColorView.backgroundColor = self.colorSelectView.currentColor;
+    }
+    
+    return _currentPanColorView;
+}
+
 -(ColorSelectView *)colorSelectView {
     if (!_colorSelectView) {
-        _colorSelectView = [[ColorSelectView alloc] initWithFrame: CGRectMake(self.bounds.size.width/2.0 + 15, self.bounds.size.height/2.0, self.bounds.size.width / 2.0 - 15 * 2, 30)];
+        _colorSelectView = [[ColorSelectView alloc] initWithFrame: CGRectMake(self.panColorView.bounds.size.width/2.0 + 15, 0, self.panColorView.bounds.size.width / 2.0 - 15*2, 30)];
     }
     
     return _colorSelectView;
@@ -86,7 +113,7 @@
 
 -(UISlider *)slider {
     if (!_slider) {
-        _slider = [[UISlider alloc] initWithFrame: CGRectMake(15, self.bounds.size.height/4.0 - 6, self.bounds.size.width/2.0 - 15 * 2 - 20, 12)];
+        _slider = [[UISlider alloc] initWithFrame: CGRectMake(CGRectGetMaxX(self.currentPanColorView.frame) + 10, self.panColorView.bounds.size.height/2.0 - 7, self.panColorView.bounds.size.width/2.0 - 15 * 2 - 20 - CGRectGetWidth(self.currentPanColorView.frame), 12)];
         _slider.thumbTintColor = [UIColor orangeColor];
         _slider.value = 5;
         _slider.minimumValue = 1;
@@ -128,32 +155,31 @@
 -(void)showColorSelectView {
     __weak typeof(self) weakSelf = self;
     
-    if (!_colorSelectView) {
-        [self addSubview: self.colorSelectView];
-        [self addSubview: self.slider];
-        [self addSubview: self.panSizeLabel];
+    if (!_panColorView) {
+        [self addSubview: self.panColorView];
         
+        self.drawBoard.enableDraw = YES;
         self.drawBoard.lineColor = self.colorSelectView.currentColor;
-        self.drawBoard.lineWidth = 5;
+        self.drawBoard.lineWidth = self.slider.value;
         self.colorSelectView.backgroundColor = [UIColor whiteColor];
         self.colorSelectView.didSelectedBlock = ^(UIColor *color) {
             weakSelf.drawBoard.isErase = NO;
+            weakSelf.currentPanColorView.backgroundColor = color;
             weakSelf.drawBoard.lineColor = color;
             weakSelf.drawBoard.lineWidth = weakSelf.slider.value;
         };
         
         [UIView animateWithDuration: 0.3 animations:^{
-            weakSelf.colorSelectView.frame = CGRectMake(self.bounds.size.width/2.0 + 15, 0, self.bounds.size.width / 2.0 - 15 * 2, 30);
+            weakSelf.panColorView.frame = CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame));
         }];
     }
     else {
+        self.drawBoard.enableDraw = NO;
         [UIView animateWithDuration: 0.3 animations:^{
-            weakSelf.colorSelectView.frame = CGRectMake(self.bounds.size.width/2.0 + 15, self.bounds.size.height/4.0, 30, 30);
+            weakSelf.panColorView.frame = CGRectMake(0, self.bounds.size.height/4.0, self.bounds.size.width, 0);
         } completion:^(BOOL finished) {
-            [weakSelf.colorSelectView removeFromSuperview];
-            weakSelf.colorSelectView = nil;
-            [weakSelf.slider removeFromSuperview];
-            [weakSelf.panSizeLabel removeFromSuperview];
+            [weakSelf.panColorView removeFromSuperview];
+            weakSelf.panColorView = nil;
         }];
     }
 }

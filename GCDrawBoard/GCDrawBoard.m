@@ -34,6 +34,7 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor clearColor];
+    self.enableDraw = YES;
     [self initData];
     return self;
 }
@@ -92,6 +93,9 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.enableDraw) {
+        return;
+    }
     CGPoint touchPoint = [self touchPoint: touches];
     GCPath *path = [GCPath pathToPoint: touchPoint pathWidth: self.lineWidth isErase: self.isErase];
     path.shapeLayer.strokeColor = self.lineColor.CGColor;
@@ -101,6 +105,10 @@
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.enableDraw) {
+        return;
+    }
+    
     CGPoint point = [self touchPoint: touches];
     GCPath *path = [self.paths lastObject];
     
@@ -130,6 +138,10 @@
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.enableDraw) {
+        return;
+    }
+    
     CGPoint point = [self touchPoint: touches];
     GCPath *path = [self.paths lastObject];
     

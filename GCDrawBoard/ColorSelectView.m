@@ -52,6 +52,7 @@
         _collectionView.dataSource = self;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.userInteractionEnabled = YES;
+        _collectionView.bounces = NO;
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier: ColorCellIdentifier];
     }
     
@@ -75,12 +76,13 @@
                                0x00EE00,
                                0x00FF00,
                                0x006400,
-                               0x000000,
-                               0x7A8B8B,
                                0x8A2BE2,
                                0x912CEE,
                                0x9B30FF,
-                               0x9F79EE
+                               0x9F79EE,
+                               0x000000,
+                               0x7A8B8B,
+                               0xFFFFFF
                                 };
     for (NSInteger i = 0; i < sizeof(colorValues)/sizeof(NSInteger); i++) {
         [self.colors addObject: HexRGBAlpha(colorValues[i], 1.0)];

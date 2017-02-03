@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, GCDrawShapeType) {
 
 @property (strong, nonatomic) UIColor *lineColor;  //画笔颜色
 
+@property (assign, nonatomic) BOOL enableDraw;      //使能画画
+
 //清屏
 -(void) clearAll;
 
