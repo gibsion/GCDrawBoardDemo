@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18185CE11E45743800713CCF /* GCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18185CE01E45743800713CCF /* GCTextView.m */; };
+		18185CE41E45CEE000713CCF /* icon_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18185CE21E45CEE000713CCF /* icon_selected@2x.png */; };
+		18185CE51E45CEE000713CCF /* icon_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18185CE31E45CEE000713CCF /* icon_selected@3x.png */; };
+		18185CE81E45D93200713CCF /* icon_cut@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18185CE61E45D93200713CCF /* icon_cut@2x.png */; };
+		18185CE91E45D93200713CCF /* icon_cut@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18185CE71E45D93200713CCF /* icon_cut@3x.png */; };
 		187557211E32FD030009008F /* GCDrawBoardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 187557201E32FD030009008F /* GCDrawBoardToolBar.m */; };
 		187557251E3311850009008F /* tuya@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187557231E3311850009008F /* tuya@2x.png */; };
 		187557261E3311850009008F /* tuya@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187557241E3311850009008F /* tuya@3x.png */; };
@@ -56,6 +61,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18185CDF1E45743800713CCF /* GCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTextView.h; sourceTree = "<group>"; };
+		18185CE01E45743800713CCF /* GCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTextView.m; sourceTree = "<group>"; };
+		18185CE21E45CEE000713CCF /* icon_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_selected@2x.png"; sourceTree = "<group>"; };
+		18185CE31E45CEE000713CCF /* icon_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_selected@3x.png"; sourceTree = "<group>"; };
+		18185CE61E45D93200713CCF /* icon_cut@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_cut@2x.png"; sourceTree = "<group>"; };
+		18185CE71E45D93200713CCF /* icon_cut@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_cut@3x.png"; sourceTree = "<group>"; };
 		1875571F1E32FD030009008F /* GCDrawBoardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDrawBoardToolBar.h; sourceTree = "<group>"; };
 		187557201E32FD030009008F /* GCDrawBoardToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDrawBoardToolBar.m; sourceTree = "<group>"; };
 		187557231E3311850009008F /* tuya@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuya@2x.png"; sourceTree = "<group>"; };
@@ -127,9 +138,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18185CDD1E456F6900713CCF /* YBPopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */,
+				18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */,
+			);
+			name = YBPopupMenu;
+			sourceTree = "<group>";
+		};
+		18185CDE1E456F7F00713CCF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D5D7BEBC1E44C3DE00696CE6 /* WawaSC.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		187557221E3311850009008F /* Icon */ = {
 			isa = PBXGroup;
 			children = (
+				18185CE61E45D93200713CCF /* icon_cut@2x.png */,
+				18185CE71E45D93200713CCF /* icon_cut@3x.png */,
 				187557231E3311850009008F /* tuya@2x.png */,
 				187557241E3311850009008F /* tuya@3x.png */,
 				187557341E335BAC0009008F /* bi@2x.png */,
@@ -144,6 +174,8 @@
 				187557391E335BD10009008F /* xiangpica@3x.png */,
 				18E958F71E44739D009B440D /* icon_text@2x.png */,
 				18E958F81E44739D009B440D /* icon_text@3x.png */,
+				18185CE21E45CEE000713CCF /* icon_selected@2x.png */,
+				18185CE31E45CEE000713CCF /* icon_selected@3x.png */,
 			);
 			path = Icon;
 			sourceTree = "<group>";
@@ -214,9 +246,8 @@
 		18E2B4111E31BE1C005BCFBE /* GCDrawBoard */ = {
 			isa = PBXGroup;
 			children = (
-				D5D7BEBC1E44C3DE00696CE6 /* WawaSC.otf */,
-				18E9FABE1E447E5300CD4D9A /* YBPopupMenu.h */,
-				18E9FABF1E447E5300CD4D9A /* YBPopupMenu.m */,
+				18185CDE1E456F7F00713CCF /* Fonts */,
+				18185CDD1E456F6900713CCF /* YBPopupMenu */,
 				18E2B4121E31BE60005BCFBE /* GCDrawBoard.h */,
 				18E2B4131E31BE60005BCFBE /* GCDrawBoard.m */,
 				18E2B4151E320639005BCFBE /* GCDrawPoint.h */,
@@ -229,6 +260,8 @@
 				18E958F51E446108009B440D /* GCTextToolBar.m */,
 				1875571F1E32FD030009008F /* GCDrawBoardToolBar.h */,
 				187557201E32FD030009008F /* GCDrawBoardToolBar.m */,
+				18185CDF1E45743800713CCF /* GCTextView.h */,
+				18185CE01E45743800713CCF /* GCTextView.m */,
 			);
 			name = GCDrawBoard;
 			sourceTree = "<group>";
@@ -342,11 +375,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18185CE81E45D93200713CCF /* icon_cut@2x.png in Resources */,
 				187557331E3352ED0009008F /* shanchu@3x.png in Resources */,
 				D5D7BEBD1E44C3DF00696CE6 /* WawaSC.otf in Resources */,
+				18185CE41E45CEE000713CCF /* icon_selected@2x.png in Resources */,
 				1875572C1E3352AE0009008F /* chexiao@2x.png in Resources */,
 				1875573A1E335BD10009008F /* xiangpica@2x.png in Resources */,
 				187557371E335BAC0009008F /* bi@3x.png in Resources */,
+				18185CE51E45CEE000713CCF /* icon_selected@3x.png in Resources */,
 				1875572D1E3352AE0009008F /* chexiao@3x.png in Resources */,
 				18E2B3EE1E31BC4B005BCFBE /* LaunchScreen.storyboard in Resources */,
 				18E2B3EB1E31BC4B005BCFBE /* Assets.xcassets in Resources */,
@@ -356,6 +392,7 @@
 				1875572E1E3352AE0009008F /* qianjin@2x.png in Resources */,
 				18E958FA1E44739D009B440D /* icon_text@3x.png in Resources */,
 				187557321E3352ED0009008F /* shanchu@2x.png in Resources */,
+				18185CE91E45D93200713CCF /* icon_cut@3x.png in Resources */,
 				187557261E3311850009008F /* tuya@3x.png in Resources */,
 				1875572F1E3352AE0009008F /* qianjin@3x.png in Resources */,
 				187557251E3311850009008F /* tuya@2x.png in Resources */,
@@ -387,6 +424,7 @@
 				18E958F31E4435F0009B440D /* GCPanColorToolBar.m in Sources */,
 				18E2B3E61E31BC4B005BCFBE /* ViewController.m in Sources */,
 				18E2B41A1E320B76005BCFBE /* GCColorSelectView.m in Sources */,
+				18185CE11E45743800713CCF /* GCTextView.m in Sources */,
 				18E9FAC01E447E5300CD4D9A /* YBPopupMenu.m in Sources */,
 				18E2B3E31E31BC4B005BCFBE /* AppDelegate.m in Sources */,
 				18E2B3E01E31BC4B005BCFBE /* main.m in Sources */,

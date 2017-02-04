@@ -107,6 +107,7 @@
     [self.imgStringArray addObject: @"qianjin"];
     [self.imgStringArray addObject: @"shanchu"];
     [self.imgStringArray addObject: @"xiangpica"];
+    [self.imgStringArray addObject: @"icon_cut"];
 }
 
 -(void)showColorSelectView {
@@ -123,18 +124,18 @@
             weakSelf.panColorBarView.frame = CGRectMake(0, 0, self.bounds.size.width, CGRectGetHeight(self.frame) - CGRectGetHeight(self.collectionView.frame));
         }];
     }
-    else {
-        self.drawBoard.enableDraw = NO;
-        [UIView animateWithDuration: 0.3 animations:^{
-            weakSelf.panColorBarView.frame = CGRectMake(0, self.bounds.size.height/4.0, self.bounds.size.width, 0);
-        } completion:^(BOOL finished) {
-            [weakSelf.panColorBarView removeFromSuperview];
-            weakSelf.panColorBarView = nil;
-        }];
-    }
+//    else {
+//        self.drawBoard.enableDraw = NO;
+//        [UIView animateWithDuration: 0.3 animations:^{
+//            weakSelf.panColorBarView.frame = CGRectMake(0, self.bounds.size.height/4.0, self.bounds.size.width, 0);
+//        } completion:^(BOOL finished) {
+//            [weakSelf.panColorBarView removeFromSuperview];
+//            weakSelf.panColorBarView = nil;
+//        }];
+//    }
 }
 
--(void)removeColorSelectView {
+-(void)removePanColorBarView {
     if (_panColorBarView) {
         [_panColorBarView removeFromSuperview];
         _panColorBarView = nil;
@@ -143,10 +144,24 @@
 
 -(void)showTextToolBar {
     self.drawBoard.enableDraw = NO;
-    [self removeColorSelectView];
+    [self removePanColorBarView];
     
-    [self addSubview: self.textToolBarView];
+    if (!_textToolBarView) {
+        [self addSubview: self.textToolBarView];
+        
+        __weak typeof(self) weakSelf = self;
+        self.textToolBarView.didChangTextBlock = ^ {
+            [weakSelf.drawBoard changTextFont: weakSelf.textToolBarView.currentFont textColor: weakSelf.textToolBarView.currentTextColor];
+        };
+        
+        self.textToolBarView.didEndEditingTextBlock = ^{
+            [weakSelf.drawBoard setEndTextEditing: YES];
+        };
+    }
     
+    self.textToolBarView.newEditStart = YES;
+    
+    [self.drawBoard addNewTextViewWithFont: self.textToolBarView.currentFont andTextColot: self.textToolBarView.currentTextColor];
 }
 
 -(void)removeTextToolBar {
@@ -236,6 +251,12 @@
         }
             break;
             
+        case 6:
+        {
+            //TO DO 裁剪
+        }
+            break;
+            
         default:
             break;
     }
@@ -259,8 +280,7 @@
         [self.contentView addSubview: self.btnBackImageView];
         
         UIView *bgView = [[UIView alloc] initWithFrame: self.contentView.bounds];
-        bgView.backgroundColor = [UIColor blueColor];
-        bgView.alpha = 0.2;
+        bgView.backgroundColor = [UIColor colorWithRed: 1 green: 0xBB/255.0 blue: 1 alpha: 0.5];
         self.selectedBackgroundView = bgView;
     }
     

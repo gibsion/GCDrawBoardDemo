@@ -7,8 +7,9 @@
 //
 
 #import "GCDrawBoard.h"
+#import "GCTextView.h"
 
-@interface GCDrawBoard ()
+@interface GCDrawBoard () <UIGestureRecognizerDelegate>
 {
     UIColor *_lastColor;
     CGFloat _lastLineWidth;
@@ -19,6 +20,12 @@
 @property (strong, nonatomic) NSMutableArray<GCPath *> *tmpPaths;
 
 @property (strong, nonatomic) NSMutableArray<GCDrawPoint *> *tmpPoints;
+
+@property (strong, nonatomic) NSMutableArray<UIView *> *sViews;
+
+@property (strong, nonatomic) NSMutableArray<UIView *> *tmpsViews;
+
+@property (strong, nonatomic) GCTextView *currentTextView;
 
 @end
 
@@ -43,6 +50,9 @@
     self.paths = [NSMutableArray new];
     self.tmpPaths = [NSMutableArray new];
     self.tmpPoints = [NSMutableArray new];
+    
+    self.sViews = [NSMutableArray new];
+    self.tmpsViews = [NSMutableArray new];
 }
 
 -(void)setIsErase:(BOOL)isErase {
@@ -60,10 +70,24 @@
     }
 }
 
+-(void)setEndTextEditing:(BOOL)endTextEditing {
+    _endTextEditing = endTextEditing;
+    if (self.currentTextView) {
+        self.currentTextView.enableEditing = !_endTextEditing;
+    }
+}
+
 #pragma mark --actions
 
 -(void)clearAll {
     [self.paths removeAllObjects];
+    if (!self.enableDraw) {
+        for (GCTextView *textView in self.sViews) {
+            [textView removeFromSuperview];
+        }
+        [self.sViews removeAllObjects];
+    }
+    
     [self setNeedsDisplay];
 }
 
@@ -71,6 +95,16 @@
     GCPath *tmpPath = [self.paths lastObject];
     if (tmpPath) {
         [self.tmpPaths addObject: tmpPath];
+    }
+    
+    if (!self.enableDraw) {
+        GCTextView *textView = (GCTextView *)[self.sViews lastObject];
+        if (textView) {
+            [self.tmpsViews addObject: textView];
+        }
+        
+        [textView removeFromSuperview];
+        [self.sViews removeLastObject];
     }
     
     [self.paths removeLastObject];
@@ -83,6 +117,16 @@
         [self.paths addObject: tmpPath];
     }
     
+    if (!self.enableDraw) {
+        GCTextView *textView = (GCTextView *)[self.tmpsViews lastObject];
+        if (textView) {
+            [self addSubview: textView];
+            [self.sViews addObject: textView];
+        }
+        
+        [self.tmpsViews removeLastObject];
+    }
+    
     [self.tmpPaths removeLastObject];
     [self setNeedsDisplay];
 }
@@ -93,10 +137,16 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    CGPoint touchPoint = [self touchPoint: touches];
     if (!self.enableDraw) {
+        if (self.currentTextView && !CGRectContainsPoint(self.frame, [[touches anyObject] locationInView: self.currentTextView])) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.currentTextView resignFirstResponder];
+            });
+        }
         return;
     }
-    CGPoint touchPoint = [self touchPoint: touches];
+    
     GCPath *path = [GCPath pathToPoint: touchPoint pathWidth: self.lineWidth isErase: self.isErase];
     path.shapeLayer.strokeColor = self.lineColor.CGColor;
     path.pathColor = self.lineColor;
@@ -147,6 +197,93 @@
     
     [path pathLineToPoint: point WithType: self.shapeType];
     [self.tmpPoints removeAllObjects];
+}
+
+#pragma mark --GCTextView options
+
+-(void)addNewTextViewWithFont:(UIFont *)textFont andTextColot:(UIColor *)textColor {
+    if (self.currentTextView) {
+        self.currentTextView.enableEditing = NO;
+    }
+    
+    GCTextView *textView = [[GCTextView alloc] initWithFrame: CGRectMake(0, 0, CGRectGetWidth(self.frame) - 80, 50)];
+    textView.textFont = textFont;
+    textView.textColor = textColor;
+    textView.center = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) / 2.0);
+    [self addSubview: textView];
+    
+    [self.sViews addObject: textView];
+    self.currentTextView = textView;
+    
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureDetected:)];
+    [panGestureRecognizer setDelegate: self];
+    [self.currentTextView addGestureRecognizer:panGestureRecognizer];
+    
+    __weak typeof(self) weakSelf = self;
+    textView.didEndEditingBlock = ^{
+        [weakSelf.currentTextView resignFirstResponder];
+//        weakSelf.currentTextView = nil;
+    };
+}
+
+//如果是插入文本状态，可以修改当前文字的字体和颜色
+-(void)changTextFont:(UIFont *)newFont textColor:(UIColor *) newColor {
+    if (self.currentTextView) {
+        if (newFont) {
+            self.currentTextView.textFont = newFont;
+        }
+        
+        if (newColor) {
+            self.currentTextView.textColor = newColor;
+        }
+    }
+}
+
+#pragma mark -- UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+- (void)panGestureDetected:(UIPanGestureRecognizer *)recognizer
+{
+    UIGestureRecognizerState state = [recognizer state];
+    
+    if (state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged)
+    {
+        CGPoint translation = [recognizer translationInView:recognizer.view];
+        CGRect frame = recognizer.view.frame;
+        
+        if (CGRectGetWidth(frame) < CGRectGetWidth(self.frame)) {
+            if (CGRectGetMaxX(frame) + translation.x > CGRectGetWidth(self.frame)
+                || CGRectGetMinX(frame) + translation.x < 0) {
+                translation.x = 0;
+            }
+        }
+        else {
+            if (CGRectGetMaxX(frame) + translation.x < CGRectGetWidth(self.frame)
+                || CGRectGetMinX(frame) + translation.x > 0) {
+                translation.x = 0;
+            }
+        }
+        
+        if (CGRectGetHeight(frame) < CGRectGetHeight(self.frame)) {
+            if ((CGRectGetMaxY(frame)+translation.y > CGRectGetHeight(self.frame))
+                || (CGRectGetMinY(frame) + translation.y) < 0) {
+                translation.y = 0;
+            }
+        }
+        else {
+            if ((CGRectGetMaxY(frame)+translation.y < CGRectGetHeight(self.frame))
+                || (CGRectGetMinY(frame) + translation.y) > 0) {
+                translation.y = 0;
+            }
+        }
+        
+        CGAffineTransform transform = CGAffineTransformTranslate(recognizer.view.transform, translation.x, translation.y);
+        [recognizer.view setTransform: transform];
+        [recognizer setTranslation:CGPointZero inView:recognizer.view];
+    }
 }
 
 @end
@@ -245,5 +382,4 @@
     CGFloat height = fabs(startPoint.y - endPoint.y);
     return CGRectMake(orignal.x , orignal.y , width, height);
 }
-
 @end

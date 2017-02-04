@@ -28,6 +28,8 @@ typedef NS_ENUM(NSUInteger, GCDrawShapeType) {
 
 @property (assign, nonatomic) BOOL enableDraw;      //使能画画
 
+@property (assign, nonatomic) BOOL endTextEditing;      //结束一次文本编辑
+
 //清屏
 -(void) clearAll;
 
@@ -37,6 +39,10 @@ typedef NS_ENUM(NSUInteger, GCDrawShapeType) {
 //恢复上一次撤销的画笔
 -(void) reSume;
 
+-(void)addNewTextViewWithFont:(UIFont *)textFont andTextColot:(UIColor *)textColor;
+
+//如果是插入文本状态，可以修改当前文字的字体和颜色
+-(void)changTextFont:(UIFont *)newFont textColor:(UIColor *) newColor;
 
 @end
 

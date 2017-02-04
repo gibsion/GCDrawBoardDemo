@@ -23,6 +23,8 @@
 
 @property (strong, nonatomic) UIButton *btnFontColorSelect;
 
+@property (strong, nonatomic) UIButton *btnEndEditing;
+
 @property (strong, nonatomic) GCColorSelectView *colorSelectView;
 
 //Data
@@ -53,6 +55,7 @@
     [self addSubview: self.btnFontSize];
     [self addSubview: self.btnFontSelect];
     [self addSubview: self.btnFontColorSelect];
+    [self addSubview: self.btnEndEditing];
 }
 
 -(void)initData {
@@ -144,7 +147,22 @@
     }
 }
 
+-(void)completeEditing:(UIButton *)sender {
+    if (self.didEndEditingTextBlock) {
+        self.didEndEditingTextBlock();
+    }
+    
+    sender.enabled = NO;
+    sender.hidden = YES;
+}
+
 #pragma getter & setter
+
+-(void)setNewEditStart:(BOOL)newEditStart {
+    _newEditStart = newEditStart;
+    self.btnEndEditing.enabled = YES;
+    self.btnEndEditing.hidden = NO;
+}
 
 -(UILabel *)currentFontTextLabel {
     if (!_currentFontTextLabel) {
@@ -194,6 +212,16 @@
     return _btnFontColorSelect;
 }
 
+-(UIButton *)btnEndEditing {
+    if (!_btnEndEditing) {
+        _btnEndEditing = [[UIButton alloc] initWithFrame: CGRectMake(CGRectGetWidth(self.frame) - 60, 0, 40, CGRectGetHeight(self.frame))];
+        [_btnEndEditing setBackgroundImage: [UIImage imageNamed: @"icon_selected"] forState: UIControlStateNormal];
+        [_btnEndEditing addTarget: self action: @selector(completeEditing:) forControlEvents: UIControlEventTouchUpInside];
+    }
+    
+    return _btnEndEditing;
+}
+
 -(GCColorSelectView *)colorSelectView {
     if (!_colorSelectView) {
         _colorSelectView = [[GCColorSelectView alloc] initWithFrame: CGRectMake(self.bounds.size.width/2.0 + 15, 0, self.bounds.size.width / 2.0 - 15*2, 30)];
@@ -205,6 +233,9 @@
             weakSelf.currentTextColor = color;
             [weakSelf removeColorSelectView];
             weakSelf.currentFontTextLabel.attributedText = [weakSelf sampleText];
+            if (weakSelf.didChangTextBlock) {
+                weakSelf.didChangTextBlock();
+            }
         };
         
     }
@@ -247,6 +278,10 @@
     }
     
     self.currentFontTextLabel.attributedText = [self sampleText];
+    
+    if (self.didChangTextBlock) {
+        self.didChangTextBlock();
+    }
 }
 
 @end
